@@ -6,8 +6,13 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="Day08-1HelloServlet" />
+          <element id="module-output" name="Day08-1HeloServlet" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/Day08-1HelloServlet/web/WEB-INF/lib/servlet-api.jar" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="Day08-1HeloServlet/web/Web" />
     </root>
   </artifact>
 </component>

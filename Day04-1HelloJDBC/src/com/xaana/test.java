@@ -1,2 +1,4 @@
-package com.xaana;public class test {
+package com.xaana;
+
+public class test {
 }
