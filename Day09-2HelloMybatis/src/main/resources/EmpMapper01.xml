@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="EmpMapper">
+    <select id="findAll" resultType="com.xaana.pojo.Emp">
+        select * from emp
+    </select>
+
+    <update id="insert">
+        insert into emp values (null, 'Joseph', 'SuperStar', 1000000000);
+    </update>
+
+    <update id="update">
+        update emp set name='YS', job='Ai', salary=10000.0 where id = 6
+    </update>
+
+    <select id="findById" resultType="com.xaana.pojo.Emp">
+        select * from emp where id=#{id}
+    </select>
+
+    <update id="insertEmp">
+        insert into emp values (null, #{name}, #{job}, #{salary})
+    </update>
+
+    <update id="modifyById">
+        update emp set name=#{name}, job=#{job}, salary=#{salary} where id = #{id}
+    </update>
+
+    <select id="findByColumn" resultType = "com.xaana.pojo.Emp">
+        select ${column} from emp
+    </select>
+
+    <select id="findByName" resultType="com.xaana.pojo.Emp">
+        select * from emp where name like #{name}
+    </select>
+
+    <select id="findByName1" resultType="com.xaana.pojo.Emp">
+        select * from emp where name like '%${name}%'
+    </select>
+
+
+<!--如果传递参数则给条件查询  不传参就不用条件查询-->
+    <select id="findEmp" resultType="com.xaana.pojo.Emp">
+        select * from emp
+        <if test="name != null">
+            where name like #{name}
+        </if>
+    </select>
+
+<!--minsal & maxsal-->
+<!--
+a)	如果传递了minSal和maxSal:查询薪资在minSal和maxSal之间的员工信息
+b)	如果只传递minSal:查询薪资大于minSal的所有员工信息
+c)	如果只传递maxSal:查询薪资小于maxSal的所有员工信息
+d)	如果什么也不传:查询所有员工信息
+-->
+    <select id="findBySal" resultType="com.xaana.pojo.Emp">
+        select * from emp
+        <where>
+            <if test="minsal != null">
+                and salary >= #{minsal}
+            </if>
+            <if test="maxsal != null">
+                and salary <![CDATA[<=]]> #{maxsal}
+            </if>
+        </where>
+    </select>
+<!--批量删除指定的信息-->
+    <update id="deleteByIds">
+        delete from emp where id in
+            <foreach collection="array" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+    </update>
+<!--批量修改指定的信息-->
+    <update id="modifyByIds">
+        update emp set salary = salary + #{salary} where id in
+        <foreach collection="arrIds" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
